@@ -47,4 +47,20 @@ public class enemymovement : MonoBehaviour
             movementPerSecond = movementDirection * characterVelocity;
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.collider.tag == "Player")
+        {
+            GetComponent<Collider2D>().enabled = false;
+            StartCoroutine(waiter());
+        }
+    }
+
+    IEnumerator waiter()
+    {
+        yield return new WaitForSeconds(4);
+        Destroy(gameObject);
+    }
 }
