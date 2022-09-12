@@ -9,7 +9,7 @@ public class enemymovement : MonoBehaviour
     private float characterVelocity = 10f;
     private Vector2 movementDirection;
     private Vector2 movementPerSecond;
-    private static int enemyCount = 0;
+    private int enemyCount = 1;
     public GameObject wintext;
 
 
@@ -39,6 +39,10 @@ public class enemymovement : MonoBehaviour
         transform.position = new Vector2(transform.position.x + (movementPerSecond.x * Time.deltaTime),
         transform.position.y + (movementPerSecond.y * Time.deltaTime));
 
+        if (enemyCount == 0)
+        {
+            Application.Quit();
+        }
     }
 
     void OnCollision2D(Collision2D collision)
@@ -55,6 +59,7 @@ public class enemymovement : MonoBehaviour
 
         if (collision.collider.tag == "Player")
         {
+            enemyCount = enemyCount - 1;
             GetComponent<Collider2D>().enabled = false;
             StartCoroutine(waiter());
         }
@@ -64,25 +69,5 @@ public class enemymovement : MonoBehaviour
     {
         yield return new WaitForSeconds(4);
         Destroy(gameObject);
-    }
-
-    private void Awake()
-    {
-        enemyCount++;
-    }
-
-    private void OnDestroy()
-    {
-        enemyCount--;
-        if (enemyCount == 0)
-        {
-            AllEnemiesGone();
-        }
-    }
-
-    private static void AllEnemiesGone()
-    {
-        //whatever should happen if everyone's gone
-        //check if the reason for this is the application being quit, you don't want to do stuff then
     }
 }
