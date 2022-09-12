@@ -9,6 +9,8 @@ public class enemymovement : MonoBehaviour
     private float characterVelocity = 10f;
     private Vector2 movementDirection;
     private Vector2 movementPerSecond;
+    private static int enemyCount = 0;
+    public GameObject wintext;
 
 
     void Start()
@@ -62,5 +64,25 @@ public class enemymovement : MonoBehaviour
     {
         yield return new WaitForSeconds(4);
         Destroy(gameObject);
+    }
+
+    private void Awake()
+    {
+        enemyCount++;
+    }
+
+    private void OnDestroy()
+    {
+        enemyCount--;
+        if (enemyCount == 0)
+        {
+            AllEnemiesGone();
+        }
+    }
+
+    private static void AllEnemiesGone()
+    {
+        //whatever should happen if everyone's gone
+        //check if the reason for this is the application being quit, you don't want to do stuff then
     }
 }
