@@ -17,6 +17,7 @@ public class enemymovement : MonoBehaviour
     {
         latestDirectionChangeTime = 0f;
         calcuateNewMovementVector();
+        StartCoroutine(timer());
     }
 
     void calcuateNewMovementVector()
@@ -68,6 +69,12 @@ public class enemymovement : MonoBehaviour
     IEnumerator waiter()
     {
         yield return new WaitForSeconds(4);
+        Destroy(gameObject);
+    }
+
+    IEnumerator timer()
+    {
+        yield return new WaitForSeconds(20);
         Destroy(gameObject);
     }
 }
